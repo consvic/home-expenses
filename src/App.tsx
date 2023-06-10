@@ -21,7 +21,8 @@ function App() {
           backgroundColor="teal.50"
           maxWidth="100vw"
           width="100vw"
-          height="100vh"
+          minHeight="100vh"
+          height="100%"
           padding={6}
         >
           <Heading color="teal.900">Home expenses</Heading>
