@@ -13,6 +13,7 @@ import {
 
 import expenses from "../../mocks/expenses.json"
 import { useMemo } from "react"
+import numberWithCommas from "../../utils/numberWithCommas"
 
 const STARTING_MONTH = 3
 
@@ -62,7 +63,7 @@ export function Expenses() {
             {expenses.map((expense) => (
               <Tr key={expense.concept}>
                 <Td>{expense.concept}</Td>
-                <Td isNumeric>{expense.amount}</Td>
+                <Td isNumeric>${numberWithCommas(expense.amount)}</Td>
                 <Td isNumeric>{expense.installments || "N/A"}</Td>
                 {expense.month - STARTING_MONTH !== 0 &&
                   Array.from(Array(expense.month - STARTING_MONTH).keys()).map(
@@ -72,7 +73,12 @@ export function Expenses() {
                   Array.from(Array(expense.installments).keys()).map(
                     (month) => (
                       <Td key={month} isNumeric>
-                        ${(expense.amount / expense.installments).toFixed(2)}
+                        $
+                        {numberWithCommas(
+                          Number(
+                            (expense.amount / expense.installments).toFixed(2)
+                          )
+                        )}
                       </Td>
                     )
                   )
