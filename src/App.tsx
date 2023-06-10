@@ -11,6 +11,7 @@ import {
 
 import "./App.css"
 import { Income } from "./components/Income"
+import { Expenses } from "./components/Expenses"
 
 function App() {
   return (
@@ -27,14 +28,14 @@ function App() {
           <Tabs variant="soft-rounded" colorScheme="teal">
             <TabList gap="8px">
               <Tab _hover={{ borderColor: "teal.500" }}>Income</Tab>
-              <Tab _hover={{ borderColor: "teal.500" }}>Tab 2</Tab>
+              <Tab _hover={{ borderColor: "teal.500" }}>Expenses</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
                 <Income />
               </TabPanel>
               <TabPanel>
-                <p>two!</p>
+                <Expenses />
               </TabPanel>
             </TabPanels>
           </Tabs>
