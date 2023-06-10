@@ -1,3 +1,4 @@
+import { useMemo } from "react"
 import {
   Box,
   Table,
@@ -12,7 +13,7 @@ import {
 } from "@chakra-ui/react"
 
 import expenses from "../../mocks/expenses.json"
-import { useMemo } from "react"
+import frequentExpenses from "../../mocks/frequentExpenses.json"
 import numberWithCommas from "../../utils/numberWithCommas"
 
 const STARTING_MONTH = 3
@@ -39,6 +40,35 @@ export function Expenses() {
     return maxExpense.installments + (maxExpense.month - earliestExpense.month)
   }, [])
 
+  const emptyTitleCells = Array.from(
+    Array(maxInstallments + (maxInstallmentsMonth - STARTING_MONTH)).keys()
+  ).map(() => <Th></Th>)
+
+  // Group items by concept
+  const groupedExpenses = frequentExpenses.reduce(
+    (
+      acc: {
+        [key: string]: Array<{
+          concept: string
+          amount: number
+          paidBy: string
+          month: number
+        }>
+      },
+      item
+    ) => {
+      const { concept } = item
+      if (!acc[concept]) {
+        acc[concept] = []
+      }
+      acc[concept].push(item)
+      return acc
+    },
+    {}
+  )
+
+  console.log({ frequentExpenses })
+
   return (
     <Box paddingTop={6}>
       <TableContainer>
@@ -46,23 +76,32 @@ export function Expenses() {
           <TableCaption>Amounts are calculated automatically</TableCaption>
           <Thead>
             <Tr>
-              <Th fontSize="lg">ONE TIMERS</Th>
-            </Tr>
-            <Tr>
-              <Th>Concept</Th>
-              <Th isNumeric>Amount</Th>
-              <Th isNumeric>Installments</Th>
+              <Th fontSize="lg">Concept</Th>
+              <Th fontSize="lg" isNumeric>
+                Amount
+              </Th>
+              <Th fontSize="lg" isNumeric>
+                Installments
+              </Th>
               {Array.from(Array(maxPayments).keys()).map((month) => (
-                <Th key={month} isNumeric>
+                <Th fontSize="lg" key={month} isNumeric>
                   {month + STARTING_MONTH}
                 </Th>
               ))}
+            </Tr>
+            <Tr>
+              <Th></Th>
+              <Th fontSize="md" letterSpacing="widest">
+                ONE TIMERS
+              </Th>
+              <Th></Th>
+              {emptyTitleCells}
             </Tr>
           </Thead>
           <Tbody>
             {expenses.map((expense) => (
               <Tr key={expense.concept}>
-                <Td>{expense.concept}</Td>
+                <Td fontWeight="500">{expense.concept}</Td>
                 <Td isNumeric>${numberWithCommas(expense.amount)}</Td>
                 <Td isNumeric>{expense.installments || "N/A"}</Td>
                 {expense.month - STARTING_MONTH !== 0 &&
@@ -100,30 +139,62 @@ export function Expenses() {
               </Tr>
             ))}
           </Tbody>
+          <Thead>
+            <Tr>
+              <Th></Th>
+              <Th fontSize="md" letterSpacing="widest">
+                FREQUENT
+              </Th>
+              <Th></Th>
+              {emptyTitleCells}
+            </Tr>
+          </Thead>
+          <Tbody>
+            {Object.entries(groupedExpenses).map(([key, value]) => (
+              <Tr>
+                <Td fontWeight="500">{key}</Td>
+                <Td isNumeric>-</Td>
+                <Td isNumeric>-</Td>
+                {Array.from(Array(value[0].month - STARTING_MONTH).keys()).map(
+                  (month) => (
+                    <Td key={month} isNumeric>
+                      -
+                    </Td>
+                  )
+                )}
+                {value.map((item) => (
+                  <Td isNumeric>${numberWithCommas(item.amount)}</Td>
+                ))}
+                {Array.from(
+                  Array(
+                    maxPayments - value.length - value[0].month + STARTING_MONTH
+                  ).keys()
+                ).map((month) => (
+                  <Td key={month} isNumeric>
+                    -
+                  </Td>
+                ))}
+              </Tr>
+            ))}
+          </Tbody>
           <Tfoot>
             <Tr>
               <Th>Total</Th>
               <Th></Th>
               <Th></Th>
-              {Array.from(Array(maxInstallments).keys()).map(() => (
-                <Th></Th>
-              ))}
+              {emptyTitleCells}
             </Tr>
             <Tr>
               <Th>Pago Ale</Th>
               <Th></Th>
               <Th></Th>
-              {Array.from(Array(maxInstallments).keys()).map(() => (
-                <Th></Th>
-              ))}
+              {emptyTitleCells}
             </Tr>
             <Tr>
               <Th>Pago Cocoy</Th>
               <Th></Th>
               <Th></Th>
-              {Array.from(Array(maxInstallments).keys()).map(() => (
-                <Th></Th>
-              ))}
+              {emptyTitleCells}
             </Tr>
           </Tfoot>
         </Table>
