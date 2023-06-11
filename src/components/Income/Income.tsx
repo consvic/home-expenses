@@ -4,19 +4,19 @@ import {
   Input,
   Stack,
   Stat,
-  StatArrow,
   StatGroup,
   StatHelpText,
   StatLabel,
   StatNumber,
 } from "@chakra-ui/react"
 import { AddIcon } from "@chakra-ui/icons"
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { PeopleContext } from "../context/peopleContext"
+import calculatePercentage from "../../utils/calculatePercentage"
 
 export function Income() {
-  const [people, setPeople] = useState<
-    { name: string; monthlyIncome: number }[]
-  >([])
+  const { people, setPeople } = useContext(PeopleContext)
+
   const [showForm, setShowForm] = useState(false)
 
   const [form, setForm] = useState<{ name?: string; monthlyIncome?: number }>()
@@ -30,16 +30,7 @@ export function Income() {
         : [form as { name: string; monthlyIncome: number }]
     )
   }
-  function calculatePercentage(person: {
-    name: string
-    monthlyIncome: number
-  }) {
-    const totalIncome = people.reduce(
-      (acc, person) => acc + person.monthlyIncome,
-      0
-    )
-    return (person.monthlyIncome / totalIncome) * 100
-  }
+
   return (
     <Flex paddingTop={8} gap={10}>
       <Flex direction="column" width="sm" gap={5}>
@@ -85,7 +76,7 @@ export function Income() {
               <StatLabel color="teal.500">{person.name}</StatLabel>
               <StatNumber color="teal.900">{person.monthlyIncome}</StatNumber>
               <StatHelpText color="teal.600">
-                {calculatePercentage(person)}%
+                {calculatePercentage(people, person) * 100}%
               </StatHelpText>
             </Stat>
           ))}

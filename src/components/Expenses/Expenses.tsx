@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useContext, useMemo } from "react"
 import {
   Box,
   Table,
@@ -15,10 +15,14 @@ import {
 import expenses from "../../mocks/expenses.json"
 import frequentExpenses from "../../mocks/frequentExpenses.json"
 import numberWithCommas from "../../utils/numberWithCommas"
+import { PeopleContext } from "../context/peopleContext"
+import calculatePercentage from "../../utils/calculatePercentage"
 
 const STARTING_MONTH = 3
 
 export function Expenses() {
+  const { people } = useContext(PeopleContext)
+
   const maxInstallments = useMemo(() => {
     return expenses.reduce((prev, current) => {
       return prev.installments > current.installments ? prev : current
@@ -261,36 +265,26 @@ export function Expenses() {
                 </Th>
               ))}
             </Tr>
-            <Tr>
-              <Th>Pago Ale</Th>
-              <Th></Th>
-              <Th></Th>
-              {Object.entries(totalAmountPerMonth).map(([key]) => (
-                <Th key={key} isNumeric>
-                  $
-                  {numberWithCommas(
-                    Number(
-                      (totalAmountPerMonth[key] * ALE_PERCENTAGE).toFixed(2)
-                    )
-                  )}
-                </Th>
-              ))}
-            </Tr>
-            <Tr>
-              <Th>Pago Cocoy</Th>
-              <Th></Th>
-              <Th></Th>
-              {Object.entries(totalAmountPerMonth).map(([key]) => (
-                <Th key={key} isNumeric>
-                  $
-                  {numberWithCommas(
-                    Number(
-                      (totalAmountPerMonth[key] * COCOY_PERCENTAGE).toFixed(2)
-                    )
-                  )}
-                </Th>
-              ))}
-            </Tr>
+            {people.map((person) => (
+              <Tr>
+                <Th>Pago {person.name}</Th>
+                <Th></Th>
+                <Th></Th>
+                {Object.entries(totalAmountPerMonth).map(([key]) => (
+                  <Th key={key} isNumeric>
+                    $
+                    {numberWithCommas(
+                      Number(
+                        (
+                          totalAmountPerMonth[key] *
+                          calculatePercentage(people, person)
+                        ).toFixed(2)
+                      )
+                    )}
+                  </Th>
+                ))}
+              </Tr>
+            ))}
           </Tfoot>
         </Table>
       </TableContainer>
