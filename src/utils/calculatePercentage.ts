@@ -1,12 +1,8 @@
+import { Person } from "../components/context/types"
+
 export default function calculatePercentage(
-  people: Array<{
-    name: string
-    monthlyIncome: number
-  }>,
-  person: {
-    name: string
-    monthlyIncome: number
-  }
+  people: Array<Person>,
+  person: Person
 ) {
   const totalIncome = people.reduce(
     (acc, person) => acc + person.monthlyIncome,
