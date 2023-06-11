@@ -151,17 +151,28 @@ export function Expenses() {
 
   return (
     <Box paddingTop={6}>
-      <Flex marginBottom={8}>
-        <Button
-          colorScheme="teal"
-          leftIcon={<AddIcon />}
-          variant="outline"
-          backgroundColor="teal.100"
-          onClick={() => setShowForm(true)}
-        >
-          Add expense
+      <Flex marginBottom={8} gap={4}>
+        {!showForm && (
+          <Button
+            colorScheme="teal"
+            leftIcon={<AddIcon />}
+            variant="outline"
+            backgroundColor="teal.100"
+            onClick={() => setShowForm(true)}
+          >
+            Add expense
+          </Button>
+        )}
+        <Button colorScheme="teal" variant="ghost">
+          Show summary
         </Button>
       </Flex>
+      {/* <TableContainer paddingTop="24px">
+        <Heading as="h6" color="teal.600" marginBottom={10} textAlign="left">
+          Summary table
+        </Heading>
+        <Table variant="striped" colorScheme="teal"></Table>
+      </TableContainer> */}
       {showForm ? (
         <ExpenseForm closeForm={() => setShowForm(false)} />
       ) : (
@@ -171,7 +182,7 @@ export function Expenses() {
           paddingTop="24px"
         >
           <Heading as="h6" color="teal.600" marginBottom={10} textAlign="left">
-            Detail table
+            Detailed table
           </Heading>
           <Table variant="striped" colorScheme="teal">
             <TableCaption>Amounts are calculated automatically</TableCaption>

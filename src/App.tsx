@@ -27,9 +27,14 @@ function App() {
             height="100%"
             padding={6}
           >
-            <Heading color="teal.900">Home expenses</Heading>
+            <Heading color="teal.900" mb={{ base: 8, lg: 0 }}>
+              Home expenses
+            </Heading>
             <Tabs variant="soft-rounded" colorScheme="teal">
-              <TabList gap="8px">
+              <TabList
+                gap="8px"
+                justifyContent={{ base: "center", lg: "flex-start" }}
+              >
                 <Tab _hover={{ borderColor: "teal.500" }}>Income</Tab>
                 <Tab _hover={{ borderColor: "teal.500" }}>Expenses</Tab>
               </TabList>
