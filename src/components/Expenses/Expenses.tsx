@@ -67,7 +67,7 @@ export function Expenses() {
     {}
   )
 
-  function getTotalAmountPerMonth() {
+  const totalAmountPerMonth = useMemo(() => {
     // calculate the total amount per month taking account of the installments per each item
     const allExpenses: Array<{
       concept: string
@@ -137,7 +137,7 @@ export function Expenses() {
       sumsPerMonth[month] = sum
     }
     return sumsPerMonth
-  }
+  }, [])
 
   return (
     <Box paddingTop={6}>
@@ -252,19 +252,44 @@ export function Expenses() {
               <Th>Total</Th>
               <Th></Th>
               <Th></Th>
-              {emptyTitleCells}
+              {Object.entries(totalAmountPerMonth).map(([key]) => (
+                <Th key={key} isNumeric>
+                  $
+                  {numberWithCommas(
+                    Number(totalAmountPerMonth[key].toFixed(2))
+                  )}
+                </Th>
+              ))}
             </Tr>
             <Tr>
               <Th>Pago Ale</Th>
               <Th></Th>
               <Th></Th>
-              {emptyTitleCells}
+              {Object.entries(totalAmountPerMonth).map(([key]) => (
+                <Th key={key} isNumeric>
+                  $
+                  {numberWithCommas(
+                    Number(
+                      (totalAmountPerMonth[key] * ALE_PERCENTAGE).toFixed(2)
+                    )
+                  )}
+                </Th>
+              ))}
             </Tr>
             <Tr>
               <Th>Pago Cocoy</Th>
               <Th></Th>
               <Th></Th>
-              {emptyTitleCells}
+              {Object.entries(totalAmountPerMonth).map(([key]) => (
+                <Th key={key} isNumeric>
+                  $
+                  {numberWithCommas(
+                    Number(
+                      (totalAmountPerMonth[key] * COCOY_PERCENTAGE).toFixed(2)
+                    )
+                  )}
+                </Th>
+              ))}
             </Tr>
           </Tfoot>
         </Table>
