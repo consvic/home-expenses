@@ -11,11 +11,39 @@ import {
   NumberInputStepper,
   Select,
 } from "@chakra-ui/react"
+import { useState } from "react"
 
-export function ExpenseForm() {
+export function ExpenseForm({ closeForm }: { closeForm: () => void }) {
+  const [formValues, setFormValues] = useState<{
+    concept?: string
+    amount?: number
+    month?: number
+    type?: string
+    installments?: number
+  }>()
+
+  function save() {
+    console.log("save")
+  }
+
+  const isSaveDisabled =
+    !formValues ||
+    !(
+      formValues.concept &&
+      formValues.amount &&
+      formValues.month &&
+      formValues.type &&
+      (formValues.type === "variable" || formValues.installments)
+    )
+
   return (
     <form>
-      <Flex direction="column" width="30%" margin="0 auto" gap="12px">
+      <Flex
+        direction="column"
+        width={{ base: "100%", lg: "30%" }}
+        margin="0 auto"
+        gap="12px"
+      >
         <FormControl>
           <FormLabel color="teal.800">Concept</FormLabel>
           <Input
@@ -23,6 +51,10 @@ export function ExpenseForm() {
             placeholder="Concept"
             backgroundColor="white"
             color="teal.700"
+            onChange={({ target }) =>
+              setFormValues({ ...formValues, concept: target.value })
+            }
+            _focusVisible={{ borderColor: "#4FD1C5" }}
           />
         </FormControl>
         <FormControl>
@@ -33,8 +65,11 @@ export function ExpenseForm() {
             step={0.2}
             backgroundColor="white"
             color="teal.700"
+            onChange={(_, value) =>
+              setFormValues({ ...formValues, amount: value })
+            }
           >
-            <NumberInputField />
+            <NumberInputField _focusVisible={{ borderColor: "#4FD1C5" }} />
             <NumberInputStepper>
               <NumberIncrementStepper />
               <NumberDecrementStepper />
@@ -49,8 +84,11 @@ export function ExpenseForm() {
             step={1}
             backgroundColor="white"
             color="teal.700"
+            onChange={(_, value) =>
+              setFormValues({ ...formValues, month: value })
+            }
           >
-            <NumberInputField />
+            <NumberInputField _focusVisible={{ borderColor: "#4FD1C5" }} />
             <NumberInputStepper>
               <NumberIncrementStepper />
               <NumberDecrementStepper />
@@ -63,32 +101,59 @@ export function ExpenseForm() {
             placeholder="Type of expense"
             backgroundColor="white"
             color="teal.700"
+            onChange={({ target }) =>
+              setFormValues({ ...formValues, type: target.value })
+            }
+            _focusVisible={{ borderColor: "#4FD1C5" }}
           >
             <option value="fixed">Fixed</option>
             <option value="variable">Variable</option>
           </Select>
         </FormControl>
-        <FormControl>
-          <FormLabel color="teal.800">Installments</FormLabel>
-          <NumberInput
-            placeholder="Installments"
-            min={2}
-            step={1}
-            backgroundColor="white"
-            color="teal.700"
-          >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </FormControl>
+        {formValues?.type === "fixed" && (
+          <FormControl>
+            <FormLabel color="teal.800">Installments</FormLabel>
+            <NumberInput
+              placeholder="Installments"
+              min={2}
+              step={1}
+              backgroundColor="white"
+              color="teal.700"
+              onChange={(_, value) =>
+                setFormValues({ ...formValues, installments: value })
+              }
+            >
+              <NumberInputField _focusVisible={{ borderColor: "#4FD1C5" }} />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+          </FormControl>
+        )}
         <Flex gap="4px" marginTop="24px">
-          <Button w="full" colorScheme="teal" variant="ghost">
+          <Button
+            w="full"
+            colorScheme="teal"
+            variant="ghost"
+            onClick={closeForm}
+          >
             Cancel
           </Button>
-          <Button w="full" colorScheme="teal">
+          <Button
+            w="full"
+            colorScheme="teal"
+            isDisabled={isSaveDisabled}
+            onClick={save}
+            _disabled={{
+              backgroundColor: "gray.50",
+              color: "teal.900",
+              _hover: {
+                backgroundColor: "gray.50",
+                color: "teal.800",
+              },
+            }}
+          >
             Save
           </Button>
         </Flex>

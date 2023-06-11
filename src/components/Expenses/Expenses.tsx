@@ -163,7 +163,7 @@ export function Expenses() {
         </Button>
       </Flex>
       {showForm ? (
-        <ExpenseForm />
+        <ExpenseForm closeForm={() => setShowForm(false)} />
       ) : (
         <TableContainer
           borderTop="1px solid"
