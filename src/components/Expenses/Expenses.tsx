@@ -15,7 +15,7 @@ import {
 import expenses from "../../mocks/expenses.json"
 import frequentExpenses from "../../mocks/frequentExpenses.json"
 import numberWithCommas from "../../utils/numberWithCommas"
-import { PeopleContext } from "../context/peopleContext"
+import { PeopleContext } from "../context/PeopleContext"
 import calculatePercentage from "../../utils/calculatePercentage"
 
 const STARTING_MONTH = 3

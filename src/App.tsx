@@ -12,7 +12,7 @@ import {
 import "./App.css"
 import { Income } from "./components/Income"
 import { Expenses } from "./components/Expenses"
-import { PeopleProvider } from "./components/context/peopleContext"
+import { PeopleProvider } from "./components/context/PeopleContext"
 
 function App() {
   return (
