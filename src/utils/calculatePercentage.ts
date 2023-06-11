@@ -1,4 +1,4 @@
-import { Person } from "../components/context/types"
+import { Person } from "../context/types"
 
 export default function calculatePercentage(
   people: Array<Person>,

@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react"
 import { AddIcon } from "@chakra-ui/icons"
 import { useContext, useState } from "react"
-import { PeopleContext } from "../context/PeopleContext"
+import { PeopleContext } from "../../context/PeopleContext"
 import calculatePercentage from "../../utils/calculatePercentage"
 
 export function Income() {
