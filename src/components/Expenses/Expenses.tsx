@@ -1,14 +1,19 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Box, Button, Flex, Heading, TableContainer } from "@chakra-ui/react"
 import { AddIcon } from "@chakra-ui/icons"
 
 import { ExpenseForm } from "../ExpenseForm/ExpenseForm"
 import { DetailedTable } from "../DetailedTable/DetailedTable"
 import { BasicTable } from "../BasicTable"
+import { getExpenses } from "../../firestore/getExpenses"
 
 export function Expenses() {
   const [showForm, setShowForm] = useState(false)
   const [view, setView] = useState<"full" | "summary">("summary")
+
+  useEffect(() => {
+    getExpenses()
+  }, [])
 
   return (
     <Box paddingTop={6}>

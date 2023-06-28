@@ -1,0 +1,92 @@
+[
+  {
+    "concept": "Renta",
+    "amount": 26000,
+    "paidBy": "Cocoy",
+    "month": 5
+  },
+  {
+    "concept": "Renta",
+    "amount": 26000,
+    "paidBy": "Cocoy",
+    "month": 6
+  },
+  {
+    "concept": "Agua",
+    "amount": 905,
+    "paidBy": "Ale",
+    "month": 5
+  },
+  {
+    "concept": "Agua",
+    "amount": 905,
+    "paidBy": "Ale",
+    "month": 7
+  },
+  {
+    "concept": "Luz",
+    "amount": 90,
+    "paidBy": "Cocoy",
+    "month": 5
+  },
+  {
+    "concept": "Internet",
+    "amount": 768,
+    "paidBy": "Cocoy",
+    "month": 4
+  },
+  {
+    "concept": "Internet",
+    "amount": 568,
+    "paidBy": "Ale",
+    "month": 5
+  },
+  {
+    "concept": "Internet",
+    "amount": 568,
+    "paidBy": "Cocoy",
+    "month": 6
+  },
+  {
+    "concept": "Gas",
+    "amount": 93,
+    "paidBy": "Ale",
+    "month": 4
+  },
+  {
+    "concept": "Gas",
+    "amount": 143,
+    "paidBy": "Ale",
+    "month": 5
+  },
+  {
+    "concept": "Limpieza Ale",
+    "amount": 800,
+    "paidBy": "Ale",
+    "month": 5
+  },
+  {
+    "concept": "Limpieza Cocoy",
+    "amount": 3600,
+    "paidBy": "Cocoy",
+    "month": 5
+  },
+  {
+    "concept": "Limpieza Cocoy",
+    "amount": 4000,
+    "paidBy": "Cocoy",
+    "month": 6
+  },
+  {
+    "concept": "Despensa Ale",
+    "amount": 3798,
+    "paidBy": "Ale",
+    "month": 6
+  },
+  {
+    "concept": "Despensa Cocoy",
+    "amount": 425,
+    "paidBy": "Cocoy",
+    "month": 6
+  }
+]

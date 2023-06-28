@@ -1,0 +1,86 @@
+[
+  {
+    "concept": "Apartado",
+    "amount": 5000,
+    "installments": 0,
+    "paidBy": "Cocoy",
+    "month": 3
+  },
+  {
+    "concept": "Renta 1er mes",
+    "amount": 37279,
+    "installments": 0,
+    "paidBy": "Cocoy",
+    "month": 3
+  },
+  {
+    "concept": "Refrigerador",
+    "amount": 10331,
+    "installments": 6,
+    "paidBy": "Cocoy",
+    "month": 4
+  },
+  {
+    "concept": "Colchon",
+    "amount": 16722,
+    "installments": 15,
+    "paidBy": "Cocoy",
+    "month": 4
+  },
+  {
+    "concept": "GAIA 1",
+    "amount": 7698,
+    "installments": 6,
+    "paidBy": "Cocoy",
+    "month": 4
+  },
+  {
+    "concept": "GAIA 2",
+    "amount": 1999,
+    "installments": 6,
+    "paidBy": "Cocoy",
+    "month": 4
+  },
+  {
+    "concept": "Kitchen",
+    "amount": 5674,
+    "installments": 0,
+    "paidBy": "Ale",
+    "month": 3
+  },
+  {
+    "concept": "Amazon kitchen",
+    "amount": 2887,
+    "installments": 12,
+    "paidBy": "Cocoy",
+    "month": 4
+  },
+  {
+    "concept": "GAIA sala",
+    "amount": 32504,
+    "installments": 12,
+    "paidBy": "Cocoy",
+    "month": 4
+  },
+  {
+    "concept": "GAIA comedor",
+    "amount": 12397,
+    "installments": 12,
+    "paidBy": "Cocoy",
+    "month": 4
+  },
+  {
+    "concept": "Costco sartenes & sábanas",
+    "amount": 4531,
+    "installments": 0,
+    "paidBy": "Cocoy",
+    "month": 4
+  },
+  {
+    "concept": "Tamarindo",
+    "amount": 6998,
+    "installments": 0,
+    "paidBy": "Cocoy",
+    "month": 5
+  }
+]
