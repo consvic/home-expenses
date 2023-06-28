@@ -4,9 +4,11 @@ import { AddIcon } from "@chakra-ui/icons"
 
 import { ExpenseForm } from "../ExpenseForm/ExpenseForm"
 import { DetailedTable } from "../DetailedTable/DetailedTable"
+import { BasicTable } from "../BasicTable"
 
 export function Expenses() {
   const [showForm, setShowForm] = useState(false)
+  const [view, setView] = useState<"full" | "summary">("summary")
 
   return (
     <Box paddingTop={6}>
@@ -22,19 +24,34 @@ export function Expenses() {
             Add expense
           </Button>
         )}
-        <Button colorScheme="teal" variant="ghost">
-          Show summary
-        </Button>
+        {view === "full" && (
+          <Button
+            colorScheme="teal"
+            variant="ghost"
+            onClick={() => setView("summary")}
+          >
+            Show summary
+          </Button>
+        )}
+        {view === "summary" && (
+          <Button
+            colorScheme="teal"
+            variant="ghost"
+            onClick={() => setView("full")}
+          >
+            Show full
+          </Button>
+        )}
       </Flex>
-      {/* <TableContainer paddingTop="24px">
-        <Heading as="h6" color="teal.600" marginBottom={10} textAlign="left">
-          Summary table
-        </Heading>
-        <Table variant="striped" colorScheme="teal"></Table>
-      </TableContainer> */}
-      {showForm ? (
-        <ExpenseForm closeForm={() => setShowForm(false)} />
-      ) : (
+      {view === "summary" && !showForm && (
+        <TableContainer paddingTop="24px">
+          <Heading as="h6" color="teal.600" marginBottom={10} textAlign="left">
+            Summary table (current month {new Date().getMonth() + 1})
+          </Heading>
+          <BasicTable />
+        </TableContainer>
+      )}
+      {view === "full" && !showForm && (
         <TableContainer
           borderTop="1px solid"
           borderTopColor="teal.100"
@@ -46,6 +63,7 @@ export function Expenses() {
           <DetailedTable />
         </TableContainer>
       )}
+      {showForm && <ExpenseForm closeForm={() => setShowForm(false)} />}
     </Box>
   )
 }

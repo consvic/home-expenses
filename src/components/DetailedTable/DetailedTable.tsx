@@ -13,10 +13,11 @@ import calculatePercentage from "../../utils/calculatePercentage"
 import numberWithCommas from "../../utils/numberWithCommas"
 import { PeopleContext } from "../../context/PeopleContext"
 
-import { BasicExpense, MergedExpenses } from "./DetailedTable.types"
+import { BasicExpense } from "./DetailedTable.types"
 
 import expenses from "../../mocks/expenses.json"
 import frequentExpenses from "../../mocks/frequentExpenses.json"
+import { getTotalPerMonth } from "../../utils/getTotalPerMonth"
 
 const STARTING_MONTH = 3
 
@@ -67,57 +68,7 @@ export function DetailedTable() {
   )
 
   const totalAmountPerMonth = useMemo(() => {
-    // calculate the total amount per month taking account of the installments per each item
-    const allExpenses: Array<MergedExpenses> = [
-      ...expenses,
-      ...frequentExpenses,
-    ]
-    const addPaymentWithInstallments = allExpenses.reduce(
-      (acc: Array<MergedExpenses>, item) => {
-        const installments = item?.installments
-        if (installments && installments > 1) {
-          const newExpenses = Array.from(Array(installments).keys()).map(
-            (month) => {
-              return {
-                ...item,
-                amount: item.amount / installments,
-                installments: 0,
-                month: month + item.month,
-              }
-            }
-          )
-          return [...acc, ...newExpenses]
-        } else {
-          return [...acc, item]
-        }
-      },
-      []
-    )
-    const grouppedByMonth = addPaymentWithInstallments.reduce(
-      (
-        acc: {
-          [key: string]: Array<MergedExpenses>
-        },
-        item
-      ) => {
-        const { month } = item
-        if (!acc[month]) {
-          acc[month] = []
-        }
-        acc[month].push(item)
-        return acc
-      },
-      {}
-    )
-    let sumsPerMonth: Record<string, number> = {}
-    for (const month in grouppedByMonth) {
-      let sum = 0
-      grouppedByMonth[month].forEach((expense) => {
-        sum += expense.amount
-      })
-      sumsPerMonth[month] = sum
-    }
-    return sumsPerMonth
+    return getTotalPerMonth(expenses, frequentExpenses)
   }, [])
   return (
     <Table variant="striped" colorScheme="teal">
@@ -166,7 +117,9 @@ export function DetailedTable() {
                 </Td>
               ))
             ) : (
-              <Td isNumeric>${expense.amount.toFixed(2)}</Td>
+              <Td isNumeric>
+                ${numberWithCommas(Number(expense.amount.toFixed(2)))}
+              </Td>
             )}
             {expense.installments < maxInstallments &&
               Array.from(
