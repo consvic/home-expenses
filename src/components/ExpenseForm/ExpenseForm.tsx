@@ -32,8 +32,7 @@ export function ExpenseForm({ closeForm }: { closeForm: () => void }) {
       formValues.concept &&
       formValues.amount &&
       formValues.month &&
-      formValues.type &&
-      (formValues.type === "variable" || formValues.installments)
+      formValues.type
     )
 
   return (
@@ -110,7 +109,7 @@ export function ExpenseForm({ closeForm }: { closeForm: () => void }) {
             <option value="variable">Variable</option>
           </Select>
         </FormControl>
-        {formValues?.type === "fixed" && (
+        {formValues?.type === "variable" && (
           <FormControl>
             <FormLabel color="teal.800">Installments</FormLabel>
             <NumberInput

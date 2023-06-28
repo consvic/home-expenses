@@ -13,6 +13,8 @@ import calculatePercentage from "../../utils/calculatePercentage"
 import numberWithCommas from "../../utils/numberWithCommas"
 import { PeopleContext } from "../../context/PeopleContext"
 
+import { BasicExpense, MergedExpenses } from "./DetailedTable.types"
+
 import expenses from "../../mocks/expenses.json"
 import frequentExpenses from "../../mocks/frequentExpenses.json"
 
@@ -50,12 +52,7 @@ export function DetailedTable() {
   const groupedExpenses = frequentExpenses.reduce(
     (
       acc: {
-        [key: string]: Array<{
-          concept: string
-          amount: number
-          paidBy: string
-          month: number
-        }>
+        [key: string]: Array<BasicExpense>
       },
       item
     ) => {
@@ -71,24 +68,12 @@ export function DetailedTable() {
 
   const totalAmountPerMonth = useMemo(() => {
     // calculate the total amount per month taking account of the installments per each item
-    const allExpenses: Array<{
-      concept: string
-      amount: number
-      paidBy: string
-      month: number
-      installments?: number
-    }> = [...expenses, ...frequentExpenses]
+    const allExpenses: Array<MergedExpenses> = [
+      ...expenses,
+      ...frequentExpenses,
+    ]
     const addPaymentWithInstallments = allExpenses.reduce(
-      (
-        acc: Array<{
-          concept: string
-          amount: number
-          paidBy: string
-          month: number
-          installments?: number
-        }>,
-        item
-      ) => {
+      (acc: Array<MergedExpenses>, item) => {
         const installments = item?.installments
         if (installments && installments > 1) {
           const newExpenses = Array.from(Array(installments).keys()).map(
@@ -111,13 +96,7 @@ export function DetailedTable() {
     const grouppedByMonth = addPaymentWithInstallments.reduce(
       (
         acc: {
-          [key: string]: Array<{
-            concept: string
-            amount: number
-            paidBy: string
-            month: number
-            installments?: number
-          }>
+          [key: string]: Array<MergedExpenses>
         },
         item
       ) => {
