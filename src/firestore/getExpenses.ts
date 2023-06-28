@@ -5,9 +5,8 @@ import {
   VariableExpense,
 } from "../components/DetailedTable/DetailedTable.types"
 
-export async function getExpenses(): Promise<BasicExpense[]> {
+export async function getExpenses(): Promise<VariableExpense[]> {
   const querySnapshot = await getDocs(collection(db, "expense"))
-  console.log("docs", { docs: querySnapshot.docs })
   const results = querySnapshot.docs.map((doc) => {
     return doc.data()
   })
@@ -17,7 +16,6 @@ export async function getExpenses(): Promise<BasicExpense[]> {
 
 export async function getFrequentExpenses(): Promise<BasicExpense[]> {
   const querySnapshot = await getDocs(collection(db, "frequent-expense"))
-  console.log("docs", { docs: querySnapshot.docs })
   const results = querySnapshot.docs.map((doc) => {
     return doc.data()
   })
